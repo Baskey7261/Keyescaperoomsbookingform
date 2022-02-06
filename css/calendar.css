@@ -1,0 +1,445 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+@font-face {
+    font-family: 'Questrial-Regular';
+    src: url('../assets/fonts/Questrial-Regular.ttf') format('trueType');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quicksand-Regular';
+    src: url('../assets/fonts/Quicksand-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'icomoon';
+    src: url('../assets/fonts/icomoon.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+button {
+    -display: none;
+    width: 150px;
+    margin: 20px auto;
+    padding: 8px;
+    background-color: rgb(150, 151, 151);
+    outline: none;
+    border: 1px solid rgb(252, 250, 250);
+    border-radius: 6px;
+    color: rgb(249, 251, 252);
+    cursor: default;
+    font-size: 1.15rem;
+}
+
+#buttonHolder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+}
+
+#title {
+    padding: 20px;
+    margin: 0px auto;
+    text-align: center;
+    font-weight: 300;
+    font-size: 1.25rem;
+}
+
+#title h3 {
+    text-align: center;
+    font-weight: 300;
+    font-size: 1.25rem;
+}
+
+#container {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 94%;
+    max-width: 500px;
+    margin: 0px auto;
+    padding-top: 20px;
+}
+
+#confirmationWrapper {
+    display: none;
+    position: absolute;
+    top: 85px;
+    width: 96%;
+    height: auto;
+    background-color: white;
+    z-index: 99;
+    outline: 1px solid #888;
+    border-radius: 2px;
+    padding: 50px 15px 50px 15px;
+    box-shadow: 1px 1px 3px #444;
+}
+
+#confirmationWrapperInner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top: 100px;
+    width: 100%;
+    height: 100%;
+    row-gap: 10px;
+}
+
+#confirmationWrapperInner h3,
+#finalizeBookingInner h3 {
+    text-align: center;
+    font-size: 1.25rem;
+    color: orange;
+    margin: 20px 0px 10px 0px;
+}
+
+#confirmationWrapperInner p,
+#finalizeBookingInner p {
+    -text-align: center;
+    font-size: 1rem;
+    color: #666;
+    margin: 0px 0px 0px 0px;
+}
+
+#finalizeBookingInner .confirmationFootNote p {
+    text-align: center;
+    font-size: .8rem;
+}
+
+.bookingDetails {
+    margin: 10px 0px 15px 0px;
+    -border: 1px solid red;
+}
+
+#confirmCode {
+    color: rgb(89, 172, 250);
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+#finalizeBookingWrapper {
+    display: none;
+    position: absolute;
+    top: 85px;
+    width: 96%;
+    height: auto;
+    background-color: white;
+    z-index: 99;
+    outline: 1px solid #888;
+    border-radius: 2px;
+    padding: 50px 15px 50px 15px;
+    box-shadow: 1px 1px 3px #444;
+}
+
+#finalizeBookingInner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top: 100px;
+    width: 100%;
+    height: 100%;
+    row-gap: 5px;
+}
+
+#finalizeBookingInner h4 {
+    text-align: center;
+    font-size: 1.25rem;
+    color: rgb(143, 211, 54);
+    margin: 20px 0px 10px 0px;
+}
+
+.tv-calendar {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 13px;
+    width: 100%;
+    margin: 0px auto;
+    padding: 0px;
+    outline: 1px solid rgb(219, 219, 219);
+    border-radius: 2px;
+    background-color: rgb(255, 255, 255);
+    color: #444;
+}
+
+.tv-calendar__header {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(122, 181, 236);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 400;
+    align-items: center;
+    border-radius: 0px 0px 0px 0px;
+    padding: 10px 12px;
+}
+
+.tv-calendar__month-label {
+    text-align: center;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.tv-calendar__nav {
+    float: left;
+    font-size: 1.125em;
+    font-weight: bold;
+    position: relative;
+    padding: 0;
+    cursor: pointer;
+    fill: white;
+}
+
+.tv-calendar__nav_prev,
+.tv-calendar__nav_next {
+    text-align: left;
+}
+
+.tv-calendar__nav_prev svg,
+.tv-calendar__nav_next svg {
+    width: 16px;
+    height: 16px;
+}
+
+.tv-calendar__code_lock .tv-calendar__days {
+    pointer-events: none;
+}
+
+.tv-calendar__week-names {
+    display: flex;
+    font-size: 1rem;
+    padding: 8px 4px 8px 15px;
+    background-color: rgb(240, 240, 255);
+}
+
+.tv-calendar__weekday {
+    flex: 1;
+    text-align: center;
+    max-width: 14%;
+}
+
+.tv-calendar__day {
+    flex: 1;
+    border-radius: 2px;
+    min-width: 14%;
+    max-width: 14%;
+    text-align: center;
+    cursor: pointer;
+    height: max-content;
+}
+
+.tv-calendar__days {
+    display: flex;
+    justify-items: center;
+    flex-wrap: wrap;
+    margin-top: 0px;
+    padding: 5px 0px 5px 10px;
+}
+
+.tv-calendar__day span {
+    width: 94%;
+    height: max-content;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.25rem;
+    font-size: 12px;
+    padding: 5px;
+    margin: 2px 1px 1px 1px;
+}
+
+.calendarDaysInner {
+    padding: 0px 0px 0px 0px;
+    margin: 2px 1px 2px 1px;
+    background-color: rgb(240, 240, 255);
+    font-weight: 100;
+}
+
+.calendarDaysInner:hover {
+    outline: 1px solid rgb(220, 220, 255);
+    border-radius: 2px;
+    font-weight: 600;
+    -box-shadow: 0px 0px 24px rgb(181, 181, 222);
+    -background-image: linear-gradient(rgb(228, 228, 255), rgb(255, 255, 255), rgb(228, 228, 255));
+}
+
+.tv-calendar__day_highlight {
+    color: red !important;
+}
+
+.tv-calendar__day_abs-today {}
+
+.tv-calendar__day_rel-today span {
+    font-weight: 600;
+    color: #222;
+}
+
+.tv-calendar__day_lock {
+    color: rgb(196, 195, 195);
+}
+
+.tv-calendar__day_off span {
+    text-decoration: line-through;
+}
+
+.tv-calendar__day_select span {
+    background-color: unset;
+}
+
+.tv-calendar__day_select-lock {
+    pointer-events: none;
+    color: #fff;
+}
+
+.tv-calendar__day_lock:hover {
+    background-color: unset;
+    color: rgb(214, 110, 110);
+    text-decoration: line-through;
+    outline: none;
+}
+
+.tv-calendar__day_different-month {
+    outline: none;
+    padding: 0px;
+    height: 0px;
+    margin: 0px;
+    border: none;
+    background-color: red;
+}
+
+.tv-calendar__day_different-month>.calendarDaysInner {
+    outline: none;
+    padding: 0px;
+    height: 0px;
+    margin: 0px;
+    border: none;
+    -background-color: red;
+}
+
+.tv-calendar__day_different-month:hover {
+    outline: none;
+    border: none;
+}
+
+#members {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px auto 1rem auto;
+    column-gap: 10px;
+    padding: .5rem 0px 0px 0px;
+    color: #444;
+}
+
+#choose {
+    color: #444;
+}
+
+#total {
+    font-weight: 600;
+    color: orange;
+    font-size: 1.5rem;
+}
+
+.check1::after {
+    content: "\ea10";
+    font-family: 'icomoon' !important;
+    font-style: normal;
+    font-weight: 100;
+    color: rgb(89, 172, 250);
+    padding: 0px 0px 0px 5px;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+}
+
+#display {
+    display: flex;
+    flex-direction: column;
+    margin: 0px auto;
+    padding: 1rem 0px 1rem 0px;
+    font-weight: 300;
+    color: #444;
+    width: 100%;
+    column-gap: 10px;
+    row-gap: .5rem;
+}
+
+#timeSlotsWrapper {
+    width: 100%;
+    margin: 20px auto 10px auto;
+    padding: 10px 0px 5px 0px;
+    text-align: center;
+    outline: 1px solid rgb(219, 219, 219);
+    border-radius: 2px;
+}
+
+#timeSlots {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px auto;
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+    gap: 4px;
+}
+
+.timeSlotsInner {
+    display: grid;
+    color: #444;
+    border-radius: 2px;
+    width: 100px;
+    height: 30px;
+    place-items: center;
+    cursor: pointer;
+    background-color: rgb(240, 240, 255);
+}
+
+.timeSlotsInner:hover {
+    cursor: pointer;
+    outline: 1px solid rgb(219, 219, 219);
+    font-weight: 600;
+}
+
+#checkOut {
+    display: flex;
+    gap: 10px;
+}
+
+.selectedItem {
+    background-color: rgb(89, 172, 250);
+    color: #fff;
+    font-weight: 600;
+}
+
+
+/* Select box */
+
+select {
+    outline: 0px solid red;
+    border: 0px solid red;
+    border-radius: 2px;
+    padding: 5px 0px 5px 0px;
+    margin: 0px 0px 0px 0px;
+    background-color: rgb(240, 240, 255);
+    outline: 1px solid rgb(219, 219, 219);
+}
+
+option {
+    border-radius: 0px;
+    color: #444;
+    background-color: #fff;
+}

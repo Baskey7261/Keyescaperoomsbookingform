@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/calendar.css">
+    <title>Document</title>
+</head>
+<script src="js/jquery.js"></script>
+<script src="js/moments.js"></script>
+<script src="js/calendar.js"></script>
+
+<body>
+    <div id="container">
+        <div id="finalizeBookingWrapper">
+            <div id="finalizeBookingInner">
+                <h3 id="finalizeBookingTitle">Thanks for your booking.</h3>
+                <p>You are booked to play:</p>
+                <h3 class="gameName">The Cursed Galleon</h3>
+                <div class="bookingDetails">
+                    <p class="bookedDate">Date:</p>
+                    <p class="bookedTime">Time</p>
+                    <p class="bookedPeople">People</p>
+                    <h3 class="toPay"></h3>
+                </div>
+                <p>Your confirmation code is:</p>
+                <div id="confirmCode">XXXXXXXXXXX</div>
+                <div class="confirmationFootNote">
+                    <p>Please make a note of this code and keep it private.</p>
+                    <p>A copy of this information has been sent to the email address you provided.</p>
+                </div>
+                <p>We look forward to seeing you on the day.</p>
+                <button id="finalizeBooking" class="selectedItem">Return to site</button>
+
+            </div>
+        </div>
+        <div id="confirmationWrapper">
+            <div id="confirmationWrapperInner">
+                <h3 id="confirmationWrapperTitle">Please confirm your booking.</h3>
+                <p>You are booking to play:</p>
+                <h3 class="gameName">The Cursed Galleon</h3>
+                <div class="bookingDetails">
+                    <p class="bookedDate">Date:</p>
+                    <p class="bookedTime">Time</p>
+                    <p class="bookedPeople">People</p>
+                    <h3 class="toPay"></h3>
+                </div>
+                <button id="confirmBooking" class="selectedItem">Confirm and pay</button>
+            </div>
+
+        </div>
+        <div id="title">
+            <h3>Key Escape Rooms Booking form.</h3>
+        </div>
+        <div id="my-calendar2"></div>
+        <div id="timeSlotsWrapper">
+            <p id="choose">Choose a date</p>
+            <div id="timeSlotsCont"></div>
+        </div>
+        <div id="display">
+            <div id="members">
+                <p>People in party: </p>
+                <select name="party" id="party" onchange="addUsers(this.value)">
+                <option value="0" selected >Choose</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+                <option value="4">Four</option>
+                <option value="5">Five</option>
+                <option value="6">Six</option>
+            </select>
+            </div>
+
+            <div id="people" style="display:none">Users:</div>
+            <div id="displayDate">Date:</div>
+            <div id="insertTime">Time:</div>
+        </div>
+        <div id="checkOut">
+            <div id="total">Total:£0</div>
+
+        </div>
+
+        <div id="buttonHolder">
+            <button id="continue">Continue</button>
+        </div>
+
+
+    </div>
+    <script>
+    </script>
+</body>
+<script>
+    let bookingDate;
+    let bookingDateFormatted;
+    let bookingTime;
+    let bookingParty;
+    let bookingTotal;
+    let bookingTotalFormatted;
+    let bookingCode;
+    document.getElementById("party").selectedIndex = "0";
+    const defaultTimeSlots = ["9:00am", "11:00am", "1:00pm", "3:00pm", "5:00pm", "7:00pm"];
+
+    function randomString(x) {
+        var s = "",
+            i = 0;
+        while (i < x) {
+            var r = Math.random(),
+                n = Math.floor((Math.random() * 10) + 0);
+            s += (r >= .5 ? n : String.fromCharCode(Math.floor(r * 51) + (r < .25 ? 65 : 65)));
+            i++;
+        };
+        return s;
+    }
+
+    function displayTimeSlots(x) {
+        let str = '';
+        x.map((e) => {
+            str += `<div class="timeSlotsInner" onclick="addTime(this)">${e}</div>`;
+        })
+        document.getElementById("timeSlotsCont").innerHTML = `<div id="timeSlots">${str}</div>`;
+    }
+
+
+
+
+    function formattedTime(y, m, d) {
+        let year = y,
+            mnth = m - 1;
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        let t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+        y -= (m < 3) ? 1 : 0;
+        let res = Math.round((y + y / 4 - y / 100 + y / 400 + t[m - 1] + d) % 7);
+        return `${days[res]}, ${d}, ${months[mnth]}, ${year}`;
+    }
+
+    function currentTime() {
+        let d = new Date();
+        year = d.getFullYear();
+        mnth = d.getMonth() + 1;
+        day = d.getDate();
+        let m = mnth < 10 ? `0${mnth}` : mnth;
+        let dy = day < 10 ? `0${day}` : day;
+        return `${year}-${m}-${dy}`;
+    }
+    let selectedDate = currentTime();
+    const calendar2 = document.querySelector('#my-calendar2');
+
+    const myCalendar2 = new tvCalendar(calendar2, {
+        date: selectedDate,
+    })
+
+    calendar2.addEventListener('calendar-change', (ev) => {
+        const m = myCalendar2.getFocusMonth();
+        console.log(`Month change to ${m}`);
+        clearForm();
+    })
+
+
+    function displayDate(x) {
+        $(".calendarDaysInner").removeClass("selectedItem");
+        let thisParent = x.parentElement;
+        $("#insertTime").text("Time:");
+        let str;
+        if ($(thisParent).hasClass("tv-calendar__day_lock")) {
+            clearForm();
+            str = "Expired.";
+            $("#insertTime").text("Please choose a valid date:");
+        } else {
+            console.log(x);
+            $(".calendarDaysInner").removeClass("selectedItem");
+
+            $(x).addClass("selectedItem");
+            let info = x.dataset.info.split(" ");
+            bookingDate = x.dataset.info;
+            formattedDate = formattedTime(parseInt(info[0]), parseInt(info[1]), parseInt(info[2]));
+            bookingDateFormatted = formattedDate;
+            str = formattedDate;
+            displayTimeSlots(defaultTimeSlots);
+            $("#displayDate").addClass("check1");
+            $("#choose").text("Choose a time slot.");
+            $("#total").text("Total: £0");
+        }
+        document.getElementById("displayDate").innerHTML = `Date: ${str}`;
+        $("#insertTime").removeClass("check1");
+
+        checkForm();
+    }
+
+    function addTime(x) {
+        console.log(x);
+        $(".timeSlotsInner").removeClass("selectedItem");
+        $(x).addClass("selectedItem");
+        document.getElementById('insertTime').innerText = `Time: ${x.innerText}`;
+        $("#insertTime").addClass("check1");
+        bookingTime = x.innerText;
+        checkForm()
+    }
+
+    function addUsers(x) {
+        document.getElementById("people").innerText = "People in party: " + x;
+        if (x !== "0") {
+            $("#members").addClass("check1");
+            bookingParty = parseInt(x);
+        } else {
+            $("#members").removeClass("check1");
+            $("#total").text("Total: £0");
+        }
+        checkForm();
+    }
+
+    function checkForm() {
+        if (document.getElementById("insertTime").innerText !== "Time:" && document.getElementById('party').value !== "0") {
+            document.getElementById('continue').addEventListener("click", goCheckOut);
+            $("#continue").addClass("selectedItem");
+            $("#continue").css("cursor", "pointer");
+            let tot = bookingParty * 10;
+            bookingTotal = tot;
+            bookingTotalFormatted = `Total £${tot}:00`;
+            $("#total").text(bookingTotalFormatted);
+
+        } else {
+            $("#continue").removeClass("selectedItem");
+            $("#continue").css("cursor", "default");
+            document.getElementById('continue').removeEventListener("click", goCheckOut);
+        }
+    }
+
+    function goCheckOut() {
+        clearForm();
+        // let users = document.getElementById('party').value;
+        console.log(bookingDate);
+        console.log(bookingTime);
+        console.log(bookingParty);
+        console.log(bookingTotal);
+        $("#confirmationWrapper").slideDown();
+        $(".bookedDate").text(`Date: ${bookingDateFormatted}`);
+        $(".bookedTime").text(`Time: ${bookingTime}`);
+        $(".bookedPeople").text(`People in party: ${bookingParty}`);
+        let rand = `KEY-${randomString(8)}`;
+        bookingCode = rand;
+        $("#confirmCode").text(rand);
+        $(".toPay").text(bookingTotalFormatted);
+        addBooking();
+    }
+
+
+    function clearForm() {
+        $(".calendarDaysInner").removeClass("selectedItem");
+        $(".timeSlots").removeClass("selectedItem");
+        $("#timeSlotsCont").html("");
+        $("#choose").text("Choose a date.");
+        $("#insertTime").text("");
+        $("#continue").removeClass("selectedItem");
+        $("#continue").css("cursor", "default");
+        $("#people").text("People in party: 0");
+        $("#displayDate").text("Date: ");
+        $("#insertTime").text("Time: ");
+        $("#members").removeClass("check1");
+        $("#displayDate").removeClass("check1");
+        $("#insertTime").removeClass("check1");
+        $("#total").text("Total: £0");
+        document.getElementById("party").selectedIndex = "0";
+        document.getElementById('continue').removeEventListener("click", goCheckOut);
+    }
+    $("#confirmBooking").click(function() {
+        $("#confirmationWrapper").slideUp();
+        $("#finalizeBookingWrapper").slideDown();
+    })
+
+    function addBooking() {
+        $.post("php/addbooking.php", {
+            Data: {
+                date: bookingDate,
+                time: bookingTime,
+                party: bookingParty,
+                total: bookingTotal,
+                code: bookingCode
+            }
+        }, function(data, status) {
+            console.log(data);
+        })
+    }
+</script>
+
+</html>
