@@ -249,7 +249,7 @@ button {
 }
 
 .tv-calendar__day span {
-    background-color: rgb(240, 240, 255);
+    -background-color: rgb(240, 240, 255);
     width: 94%;
     height: max-content;
     border-radius: 2px;
