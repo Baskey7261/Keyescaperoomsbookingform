@@ -32,7 +32,7 @@ button {
     width: 150px;
     margin: 20px auto;
     padding: 8px;
-    background-color: rgb(150, 151, 151);
+    background-color: rgb(212, 212, 255);
     outline: none;
     border: 1px solid rgb(252, 250, 250);
     border-radius: 6px;
@@ -74,7 +74,7 @@ button {
 #confirmationWrapper {
     display: none;
     position: absolute;
-    top: 85px;
+    top: 75px;
     width: 96%;
     height: auto;
     background-color: white;
@@ -115,6 +115,7 @@ button {
 #finalizeBookingInner .confirmationFootNote p {
     text-align: center;
     font-size: .8rem;
+    padding: 0px 15px 10px 15px;
 }
 
 .bookingDetails {
@@ -126,12 +127,13 @@ button {
     color: rgb(89, 172, 250);
     font-size: 1.25rem;
     font-weight: 300;
+    padding: 8px 0px 8px 0px;
 }
 
 #finalizeBookingWrapper {
     display: none;
     position: absolute;
-    top: 85px;
+    top: 65px;
     width: 96%;
     height: auto;
     background-color: white;
@@ -156,7 +158,7 @@ button {
 #finalizeBookingInner h4 {
     text-align: center;
     font-size: 1.25rem;
-    color: rgb(143, 211, 54);
+    color: rgb(122, 181, 236);
     margin: 20px 0px 10px 0px;
 }
 
@@ -377,6 +379,10 @@ button {
     width: 100%;
     column-gap: 10px;
     row-gap: .5rem;
+}
+
+.details {
+    display: none;
 }
 
 #timeSlotsWrapper {
