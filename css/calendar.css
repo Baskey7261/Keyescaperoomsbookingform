@@ -246,10 +246,11 @@ button {
     flex-wrap: wrap;
     margin-top: 0px;
     padding: 5px 0px 5px 10px;
+    color: #111;
 }
 
 .tv-calendar__day span {
-    -background-color: rgb(240, 240, 255);
+    background-color: rgb(240, 240, 255);
     width: 94%;
     height: max-content;
     border-radius: 2px;
@@ -261,7 +262,6 @@ button {
     padding: 5px;
     margin: 2px 1px 1px 1px;
     color: #111;
-    z-index: 100;
 }
 
 .calendarDaysInner {
