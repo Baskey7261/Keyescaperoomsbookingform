@@ -265,9 +265,9 @@ button {
 .calendarDaysInner {
     padding: 0px 0px 0px 0px;
     margin: 2px 1px 2px 1px;
-    background-color: rgb(240, 240, 255);
     font-weight: 100;
     color: #111;
+    z-index: 100;
 }
 
 .calendarDaysInner:hover {
